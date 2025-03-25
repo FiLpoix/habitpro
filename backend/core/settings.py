@@ -41,11 +41,12 @@ INSTALLED_APPS = [
 #Pacotes e Bibliotecas
 INSTALLED_APPS += [
     'rest_framework',
+    'corsheaders',
 ]
 
 #Apps
 INSTALLED_APPS += [
-    'habits'
+    'habits',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8081",
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 ROOT_URLCONF = 'core.urls'
 

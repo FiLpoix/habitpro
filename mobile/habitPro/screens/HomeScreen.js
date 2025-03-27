@@ -4,7 +4,6 @@ import { useHabit } from '../context/ContextApi';
 
 export default function HomeScreen({ navigation }) {
     const { data } = useHabit();
-    {console.log(data);}
     return (
         <View>
             <Text>Home Screen</Text>

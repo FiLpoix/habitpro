@@ -1,5 +1,6 @@
 import React, {useContext, createContext, useState, useEffect} from 'react';
 import axios from 'axios';
+import api from '../services/api';
 
 const HabitContext = createContext();
 const API_URL = 'http://10.19.14.105:8000'

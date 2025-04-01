@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
@@ -47,6 +47,9 @@ export default function HomeScreen({ navigation }) {
               </Text>
             )} />
         )}
+      <TouchableOpacity style={styles.addButton} onPress={() => {navigation.navigate('Add')}}>
+        <Text>Adicionar Habito</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -97,5 +100,8 @@ const styles = StyleSheet.create({
   activityItem: {
     fontSize: 20,
     marginVertical: 5,
+  },
+  addButton:{
+    fontSize:30,
   },
 });

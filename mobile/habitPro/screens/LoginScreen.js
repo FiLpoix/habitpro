@@ -1,6 +1,8 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import React, { useState } from 'react';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function LoginScreen({ navigation }) {
     const [username, setUsername] = useState('');
@@ -20,6 +22,12 @@ export default function LoginScreen({ navigation }) {
                 password,
             });
             if (response.status === 200) {
+                // Salvar o token no AsyncStorage
+                const { token } = response.data;
+
+                await AsyncStorage.setItem('auth_token', token);
+                console.log('Token salvo:', token);
+
                 navigation.navigate('Home');
             } else {
                 Alert.alert('Erro', 'Login falhou. Verifique suas credenciais.');

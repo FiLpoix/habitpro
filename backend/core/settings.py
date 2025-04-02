@@ -20,15 +20,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n*dxo3eap^1e!88ys75nk_9$x6e^-j2yfoh=z7-x3w636vn)qm'
+SECRET_KEY = 'django-insecure-+o6ts6+9sw+23xahz)9l!a7h1f=#e1whfw(3^n4wouc_b3bkz8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", '10.19.14.105']
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", '10.19.14.105', '192.168.0.167']
 
 
 # Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,13 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-#Pacotes e Bibliotecas
 INSTALLED_APPS += [
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt',
 ]
 
-#Apps
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
 INSTALLED_APPS += [
     'habits',
 ]
@@ -60,12 +66,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8081",
-]
-
 CORS_ALLOW_ALL_ORIGINS = True
-
 
 ROOT_URLCONF = 'core.urls'
 

@@ -17,16 +17,16 @@ export default function LoginScreen({ navigation }) {
 
         setLoading(true);
         try {
-            const response = await axios.post(`http://10.19.14.105:8000/auth/login/`, {
+            const response = await axios.post(`http://192.168.0.167:8000/api/token/`, {
                 username,
                 password,
             });
             if (response.status === 200) {
-                // Salvar o token no AsyncStorage
-                const { token } = response.data;
+                const { access, refresh} = response.data;
 
-                await AsyncStorage.setItem('auth_token', token);
-                console.log('Token salvo:', token);
+                await AsyncStorage.setItem('access_token', access);
+                await AsyncStorage.setItem('refresh_token', refresh);
+                console.log('Tokens salvos:', access, refresh);
 
                 navigation.navigate('Home');
             } else {

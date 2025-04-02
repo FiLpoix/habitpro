@@ -1,12 +1,21 @@
 from rest_framework import serializers
-from .models import Habit, CheckIn
+from .models import Item
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
-class HabitSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Habit
-        fields = '__all__'
+        model = get_user_model()
+        fields = ['id', 'username', 'email']
 
-class CheckInSerializer(serializers.ModelSerializer):
+class ItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CheckIn
-        fields = '__all__'
+        model = Item
+        fields = ['id', 'name', 'description']
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        validated_data['user'] = request.user
+        return super().create(validated_data)

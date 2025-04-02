@@ -26,7 +26,7 @@ export default function HomeScreen({ navigation }) {
 
   const fetchHabits = async (authToken) => {
     try {
-      const response = await axios.get('http://192.168.0.167:8000/api/items/', {
+      const response = await axios.get('http://10.19.14.105:8000/api/items/', {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -41,6 +41,29 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
+  const deleteHabit = async (id) => {
+    try {
+      if (!token) {
+        Alert.alert('Erro', 'Token de autenticação não encontrado.');
+        return;
+      }
+
+      const response = await axios.delete(`http://10.19.14.105:8000/api/items/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log('Hábito deletado:', response.data);
+      Alert.alert('Sucesso', 'Hábito deletado com sucesso.');
+
+      setHabits((prevHabits) => prevHabits.filter((habit) => habit.id !== id));
+    } catch (error) {
+      console.error('Erro ao deletar hábito:', error.response?.data || error.message);
+      Alert.alert('Erro', 'Não foi possível deletar o hábito.');
+    }
+  };
+
   const handleLogout = async () => {
     await AsyncStorage.removeItem('access_token');
     navigation.replace('Login');
@@ -50,16 +73,16 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Bem-vindo!</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('EditProfile')} style={styles.iconContainer}>
           <FontAwesome name="user" size={24} color="white" />
         </TouchableOpacity>
       </View>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>My Plan{`\n`}For Today</Text>
-          <Text style={styles.progressText}>
-            {habits.length} Habits
-          </Text>
-        </View>
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>My Plan{`\n`}For Today</Text>
+        <Text style={styles.progressText}>
+          {habits.length} Habits
+        </Text>
+      </View>
       <View style={styles.activitySection}>
         <Text style={styles.activityTitle}>Today Activity</Text>
         {loading ? (
@@ -69,9 +92,17 @@ export default function HomeScreen({ navigation }) {
             data={habits}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <Text style={styles.activityItem}>
-                • {item.name}
-              </Text>
+              <View>
+                <Text style={styles.activityItem}>
+                  • {item.name}
+                </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Update', {id: item.id})}>
+                  <FontAwesome name="edit" size={20} color="blue" style={{ marginRight: 10 }} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => deleteHabit(item.id)}>
+                  <FontAwesome name="trash" size={20} color="red" />
+                </TouchableOpacity>
+              </View>
             )} />
         )}
         <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Add')}>
@@ -84,14 +115,14 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop:50,
+    paddingTop: 50,
     flex: 1,
     backgroundColor: '#111',
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between', 
-    alignItems: 'center', 
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 20,
   },
   headerTitle: {

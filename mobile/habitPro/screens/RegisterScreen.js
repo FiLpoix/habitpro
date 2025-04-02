@@ -23,8 +23,8 @@ export default function RegisterScreen({ navigation }) {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://192.168.0.167:8000/api/register/', {
-        name: name,
+      const response = await axios.post('http://10.19.14.105:8000/api/register/', {
+        username: name,
         email,
         password,
       });
@@ -96,6 +96,7 @@ export default function RegisterScreen({ navigation }) {
           <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={loading}>
             <Text style={styles.buttonText}>{loading ? 'Carregando...' : 'Cadastrar'}</Text>
           </TouchableOpacity>
+          
           <View style={styles.registerContainer}>
             <Text style={styles.registerText}>Já tem uma conta?</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>

@@ -26,7 +26,7 @@ export default function AddHabitScreen({ navigation }) {
             }
 
             const response = await axios.post(
-                'http://192.168.0.167:8000/api/items/',
+                'http://10.19.14.105:8000/api/items/',
                 {
                     name: title,
                     description
@@ -38,7 +38,7 @@ export default function AddHabitScreen({ navigation }) {
                 Alert.alert('Sucesso', 'Hábito adicionado com sucesso!');
                 setTitle('');
                 setDescription('');
-                navigation.goBack();
+                navigation.navigate('Home')
             } else {
                 Alert.alert('Erro', 'Não foi possível adicionar o hábito');
             }
@@ -76,6 +76,9 @@ export default function AddHabitScreen({ navigation }) {
             >
                 <Text style={styles.buttonText}>{loading ? "Adicionando..." : "Adicionar Hábito"}</Text>
             </TouchableOpacity>
+            {/* <TouchableOpacity
+                style={[styles.button, { backgroundColor: '#f44336' }]}
+                onPress={() => navigation.navigate('Home')} ><Text>Voltar</Text></TouchableOpacity> */}
         </View>
     );
 }

@@ -31,6 +31,7 @@ export default function HomeScreen({ navigation }) {
           Authorization: `Bearer ${authToken}`,
         },
       });
+      console.log('Dados recebidos:', response.data);
       setHabits(response.data);
     } catch (error) {
       console.error('Erro ao buscar hábitos:', error.response?.data || error.message);
@@ -48,20 +49,21 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleLogout}>
-          <FontAwesome name="sign-out" size={24} color="white" />
+        <Text style={styles.headerTitle}>Bem-vindo!</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.iconContainer}>
+          <FontAwesome name="user" size={24} color="white" />
         </TouchableOpacity>
+      </View>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>My Plan{`\n`}For Today</Text>
           <Text style={styles.progressText}>
             {habits.length} Habits
           </Text>
         </View>
-      </View>
       <View style={styles.activitySection}>
         <Text style={styles.activityTitle}>Today Activity</Text>
         {loading ? (
-          <Text>Carregando...</Text>
+          <Text style={styles.loadingText}>Carregando...</Text>
         ) : (
           <FlatList
             data={habits}
@@ -82,30 +84,47 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop:50,
     flex: 1,
-    backgroundColor: '#222',
+    backgroundColor: '#111',
   },
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
     padding: 20,
-    backgroundColor: '#111',
-    alignItems: 'center',
   },
-  icon: {
-    alignSelf: 'flex-end',
+  headerTitle: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  iconContainer: {
+    borderColor: '#fff',
+    borderWidth: 2,
+    borderRadius: 25,
+    backgroundColor: '#333',
+    height: 50,
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   card: {
     backgroundColor: '#333',
     padding: 20,
     borderRadius: 10,
+    margin: 20,
     alignItems: 'center',
   },
   cardTitle: {
     color: 'white',
+    fontSize: 18,
     textAlign: 'center',
     marginBottom: 10,
   },
   progressText: {
     color: 'white',
+    fontSize: 16,
     marginTop: 10,
   },
   activitySection: {
@@ -116,12 +135,20 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   activityTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 20,
   },
   activityItem: {
-    fontSize: 20,
+    fontSize: 16,
     marginVertical: 5,
+    color: '#333',
   },
   addButton: {
     backgroundColor: '#333',

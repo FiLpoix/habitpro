@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import React, { useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,7 +22,7 @@ export default function LoginScreen({ navigation }) {
                 password,
             });
             if (response.status === 200) {
-                const { access, refresh} = response.data;
+                const { access, refresh } = response.data;
 
                 await AsyncStorage.setItem('access_token', access);
                 await AsyncStorage.setItem('refresh_token', refresh);
@@ -42,6 +42,7 @@ export default function LoginScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
+            <Image source={require('../assets/logo.png')} style={styles.logo} />
             <Text style={styles.title}>Login</Text>
             <TextInput
                 style={styles.input}
@@ -64,6 +65,13 @@ export default function LoginScreen({ navigation }) {
                 disabled={loading} >
                 <Text style={styles.buttonText}>{loading ? 'Carregando...' : 'Login'}</Text>
             </TouchableOpacity>
+            <View style={styles.loginContainer}>
+                <Text style={styles.loginText}>Já possui uma conta?</Text>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Register')} >
+                    <Text style={styles.loginLink}>Faça seu Cadastro</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -75,6 +83,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#f2f2f2',
         padding: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+    },
+    logo: {
+        width: 150,
+        height: 150,
+        marginBottom: 20,
     },
     title: {
         fontSize: 24,
@@ -104,6 +119,19 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontSize: 16,
+        fontWeight: 'bold',
+    },
+    loginContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20,
+    },
+    loginText: {
+        color: '#666',
+        marginRight: 5,
+    },
+    loginLink: {
+        color: '#4285F4',
         fontWeight: 'bold',
     },
 });

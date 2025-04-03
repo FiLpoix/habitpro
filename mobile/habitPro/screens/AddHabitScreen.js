@@ -26,7 +26,7 @@ export default function AddHabitScreen({ navigation }) {
             }
 
             const response = await axios.post(
-                'http://10.19.14.105:8000/api/items/',
+                'http://192.168.0.167:8000/api/items/',
                 {
                     name: title,
                     description

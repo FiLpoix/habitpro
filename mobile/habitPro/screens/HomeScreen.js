@@ -1,6 +1,6 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -26,7 +26,7 @@ export default function HomeScreen({ navigation }) {
 
   const fetchHabits = async (authToken) => {
     try {
-      const response = await axios.get('http://10.19.14.105:8000/api/items/', {
+      const response = await axios.get('http://192.168.0.167:8000/api/items/', {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -48,7 +48,7 @@ export default function HomeScreen({ navigation }) {
         return;
       }
 
-      const response = await axios.delete(`http://10.19.14.105:8000/api/items/${id}/`, {
+      const response = await axios.delete(`http://192.168.0.167:8000/api/items/${id}/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -72,13 +72,16 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+      <TouchableOpacity onPress={() => navigation.navigate('Achievements')} style={styles.badgeIcon}>
+          <MaterialIcons name="emoji-events" size={24} color="white" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Bem-vindo!</Text>
         <TouchableOpacity onPress={() => navigation.navigate('EditProfile')} style={styles.iconContainer}>
           <FontAwesome name="user" size={24} color="white" />
         </TouchableOpacity>
       </View>
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>My Plan{`\n`}For Today</Text>
+        <Text style={styles.cardTitle}>Meu Plano{`\n`}Para Hoje</Text>
         <Text style={styles.progressText}>
           {habits.length} Habits
         </Text>
@@ -96,7 +99,7 @@ export default function HomeScreen({ navigation }) {
                 <Text style={styles.activityItem}>
                   • {item.name}
                 </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Update', {id: item.id})}>
+                <TouchableOpacity onPress={() => navigation.navigate('HabitDetail', {habitId: item.id})}>
                   <FontAwesome name="edit" size={20} color="blue" style={{ marginRight: 10 }} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => deleteHabit(item.id)}>
@@ -129,6 +132,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  badgeIcon: {
+    borderColor: '#fff',
+    borderWidth: 2,
+    borderRadius: 25,
+    backgroundColor: '#333',
+    height: 50,
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   iconContainer: {
     borderColor: '#fff',

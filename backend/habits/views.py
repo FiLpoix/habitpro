@@ -8,7 +8,7 @@ class ItemViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Item.objects.filter(user=self.request.user)  # 🔹 Filtra apenas os hábitos do usuário logado
+        return Item.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

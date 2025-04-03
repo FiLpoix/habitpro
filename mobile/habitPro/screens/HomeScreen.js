@@ -26,7 +26,7 @@ export default function HomeScreen({ navigation }) {
 
   const fetchHabits = async (authToken) => {
     try {
-      const response = await axios.get('http://192.168.0.167:8000/api/items/', {
+      const response = await axios.get('http://10.19.14.105:8000/api/items/', {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -48,7 +48,7 @@ export default function HomeScreen({ navigation }) {
         return;
       }
 
-      const response = await axios.delete(`http://192.168.0.167:8000/api/items/${id}/`, {
+      const response = await axios.delete(`http://10.19.14.105:8000/api/items/${id}/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,7 +76,7 @@ export default function HomeScreen({ navigation }) {
           <MaterialIcons name="emoji-events" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Bem-vindo!</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('EditProfile')} style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.iconContainer}>
           <FontAwesome name="user" size={24} color="white" />
         </TouchableOpacity>
       </View>

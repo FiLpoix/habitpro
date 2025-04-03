@@ -25,7 +25,7 @@ export default function UpdateHabitScreen({ route, navigation }) {
 
   const fetchHabitDetails = async (authToken) => {
     try {
-      const response = await axios.get(`http://192.168.0.167:8000/api/items/${id}/`, {
+      const response = await axios.get(`http://10.19.14.105:8000/api/items/${id}/`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setHabit(response.data);
@@ -39,7 +39,7 @@ export default function UpdateHabitScreen({ route, navigation }) {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://192.168.0.167:8000/api/items/${id}/`, habit, {
+      await axios.put(`http://10.19.14.105:8000/api/items/${id}/`, habit, {
         headers: { Authorization: `Bearer ${token}` },
       });
       Alert.alert('Sucesso', 'Hábito atualizado com sucesso.');
@@ -73,6 +73,9 @@ export default function UpdateHabitScreen({ route, navigation }) {
       />
       <TouchableOpacity style={styles.saveButton} onPress={handleUpdate}>
         <Text style={styles.buttonText}>Salvar Alterações</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.saveButton} onPress={()=> navigation.navigate('Home')} >
+        <Text>Voltar Para Tela Principal</Text>
       </TouchableOpacity>
     </View>
   </View>

@@ -26,7 +26,7 @@ export default function AddHabitScreen({ navigation }) {
             }
 
             const response = await axios.post(
-                'http://192.168.0.167:8000/api/items/',
+                'http://10.19.14.105:8000/api/items/',
                 {
                     name: title,
                     description
@@ -76,9 +76,10 @@ export default function AddHabitScreen({ navigation }) {
             >
                 <Text style={styles.buttonText}>{loading ? "Adicionando..." : "Adicionar Hábito"}</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-                style={[styles.button, { backgroundColor: '#f44336' }]}
-                onPress={() => navigation.navigate('Home')} ><Text>Voltar</Text></TouchableOpacity> */}
+            <TouchableOpacity
+                style={[styles.button, styles.homeButton]}
+                onPress={() => navigation.goBack()} ><Text style={styles.buttonText}> Voltar Para tela Principal </Text>
+                </TouchableOpacity>
         </View>
     );
 }

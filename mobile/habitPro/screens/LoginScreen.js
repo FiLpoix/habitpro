@@ -17,7 +17,7 @@ export default function LoginScreen({ navigation }) {
 
         setLoading(true);
         try {
-            const response = await axios.post(`http://192.168.0.167:8000/api/token/`, {
+            const response = await axios.post(`http://10.19.14.105:8000/api/token/`, {
                 username,
                 password,
             });
@@ -26,6 +26,7 @@ export default function LoginScreen({ navigation }) {
 
                 await AsyncStorage.setItem('access_token', access);
                 await AsyncStorage.setItem('refresh_token', refresh);
+                await AsyncStorage.setItem('username', username)
                 console.log('Tokens salvos:', access, refresh);
 
                 navigation.navigate('Home');

@@ -26,7 +26,7 @@ export default function HabitDetailScreen({ route, navigation }) {
 
   const fetchHabitDetails = async (authToken) => {
     try {
-      const response = await axios.get(`http://192.168.0.167:8000/api/items/${habitId}/`, {
+      const response = await axios.get(`http://10.19.14.105:8000/api/items/${habitId}/`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setHabit(response.data);
@@ -40,7 +40,7 @@ export default function HabitDetailScreen({ route, navigation }) {
 
   const deleteHabit = async () => {
     try {
-      await axios.delete(`http://192.168.0.167:8000/api/items/${habitId}/`, {
+      await axios.delete(`http://10.19.14.105:8000/api/items/${habitId}/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       Alert.alert('Sucesso', 'Hábito deletado com sucesso.');
@@ -71,6 +71,9 @@ export default function HabitDetailScreen({ route, navigation }) {
               <Text style={styles.buttonText}>Excluir</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity onPress={()=>navigation.goBack()} >
+            <Text>Voltar</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <Text style={styles.errorText}>Hábito não encontrado.</Text>

@@ -116,14 +116,14 @@ input: {
   width: '100%',
 },
 saveButton: {
-  backgroundColor: '#28a745',
+  backgroundColor: '#fff',
   padding: 10,
   borderRadius: 5,
   alignItems: 'center',
   width: '100%',
 },
 buttonText: {
-  color: 'white',
+  color: 'black',
   fontSize: 16,
   fontWeight: 'bold',
 },

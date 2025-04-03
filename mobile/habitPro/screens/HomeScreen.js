@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HomeScreen({ navigation }) {
   const [habits, setHabits] = useState([]);
+  const [checkin, setCheckin] = useState()
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(null);
 
@@ -64,6 +65,7 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
+  
   const handleLogout = async () => {
     await AsyncStorage.removeItem('access_token');
     navigation.replace('Login');
@@ -72,7 +74,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-      <TouchableOpacity onPress={() => navigation.navigate('Achievements')} style={styles.badgeIcon}>
+        <TouchableOpacity onPress={() => navigation.navigate('Achievements')} style={styles.badgeIcon}>
           <MaterialIcons name="emoji-events" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Bem-vindo!</Text>
@@ -96,10 +98,18 @@ export default function HomeScreen({ navigation }) {
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View>
+                <TouchableOpacity onPress={() => checkInHabit(item)}>
+                  <FontAwesome
+                    name={item.checkedIn ? 'check-circle' : 'circle-o'}
+                    size={24}
+                    color={item.checkedIn ? 'green' : 'gray'}
+                    style={{ marginRight: 10 }}
+                  />
+                </TouchableOpacity>
                 <Text style={styles.activityItem}>
                   • {item.name}
                 </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('HabitDetail', {habitId: item.id})}>
+                <TouchableOpacity onPress={() => navigation.navigate('HabitDetail', { habitId: item.id })}>
                   <FontAwesome name="edit" size={20} color="blue" style={{ marginRight: 10 }} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => deleteHabit(item.id)}>

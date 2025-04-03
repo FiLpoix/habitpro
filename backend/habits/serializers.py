@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item
+from .models import Item, CheckIn
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
@@ -19,3 +19,9 @@ class ItemSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         validated_data['user'] = request.user
         return super().create(validated_data)
+    
+
+class CheckInSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CheckIn
+        fields = '__all__'

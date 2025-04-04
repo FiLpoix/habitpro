@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../services/api';
 
 export default function HomeScreen({ navigation }) {
   const [habits, setHabits] = useState([]);
@@ -27,7 +28,7 @@ export default function HomeScreen({ navigation }) {
 
   const fetchHabits = async (authToken) => {
     try {
-      const response = await axios.get('http://192.168.0.167:8000/api/items/', {
+      const response = await api.get(`/api/items/`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -49,7 +50,7 @@ export default function HomeScreen({ navigation }) {
         return;
       }
 
-      const response = await axios.delete(`http://192.168.0.167:8000/api/items/${id}/`, {
+      const response = await api.delete(`/api/items/${id}/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -72,11 +73,11 @@ export default function HomeScreen({ navigation }) {
         return;
       }
 
-      const response = await axios.post(
-        'http://192.168.0.167:8000/api/checkins/',
+      const response = await api.post(
+        '/api/checkins/',
         {
           habit: habitId,
-          status: true, // ou false, dependendo do que você quiser registrar
+          status: true,
         },
         {
           headers: {
@@ -84,6 +85,7 @@ export default function HomeScreen({ navigation }) {
           },
         }
       );
+      navigation.navigate('HabitDetail', { habitId: habitId });
 
       console.log('Check-in realizado:', response.data);
       Alert.alert('Sucesso', 'Check-in realizado com sucesso!');

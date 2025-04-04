@@ -11,7 +11,7 @@ export default function EditProfileScreen({ navigation }) {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('http://10.19.14.113:8000/api/user');
+                const response = await api.get('/api/user');
                 const { name, email } = response.data;
                 setName(name);
                 setEmail(email);
@@ -33,7 +33,7 @@ export default function EditProfileScreen({ navigation }) {
 
         setLoading(true);
         try {
-            const response = await axios.put('http://10.19.14.113:8000/api/user', {
+            const response = await api.put('/api/user', {
                 name,
                 email,
                 password,

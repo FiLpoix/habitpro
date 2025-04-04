@@ -1,6 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, Image, Alert } from 'react-native';
 import React, { useState } from 'react';
 import axios from 'axios';
+import api from '../services/api';
 
 
 export default function RegisterScreen({ navigation }) {
@@ -23,7 +24,7 @@ export default function RegisterScreen({ navigation }) {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://192.168.0.167:8000/api/register/', {
+      const response = await api.post('/api/register/', {
         username: name,
         email,
         password,

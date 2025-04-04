@@ -1,6 +1,7 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import React, { useState } from 'react';
 import axios from 'axios';
+import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -17,7 +18,7 @@ export default function LoginScreen({ navigation }) {
 
         setLoading(true);
         try {
-            const response = await axios.post(`http://192.168.0.167:8000/api/token/`, {
+            const response = await api.post(`/api/token/`, {
                 username,
                 password,
             });

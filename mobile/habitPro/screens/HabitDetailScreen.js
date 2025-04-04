@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
+import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HabitDetailScreen({ route, navigation }) {
@@ -26,7 +27,7 @@ export default function HabitDetailScreen({ route, navigation }) {
 
   const fetchHabitDetails = async (authToken) => {
     try {
-      const response = await axios.get(`http://192.168.0.167:8000/api/items/${habitId}/`, {
+      const response = await api.get(`/api/items/${habitId}/`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setHabit(response.data);
@@ -40,7 +41,7 @@ export default function HabitDetailScreen({ route, navigation }) {
 
   const deleteHabit = async () => {
     try {
-      await axios.delete(`http://192.168.0.167:8000/api/items/${habitId}/`, {
+      await api.delete(`/api/items/${habitId}/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       Alert.alert('Sucesso', 'Hábito deletado com sucesso.');

@@ -110,6 +110,6 @@ HabitPrime/
 
 Este projeto está disponível publicamente no GitHub. Você pode acessá-lo pelo seguinte link:
 
-👉 https://github.com/seu-usuario/habitprime
+👉 https://github.com/FiLpoix/habitpro.git
 
 Não esqueça de deixar uma estrela ⭐ se gostar do projeto!

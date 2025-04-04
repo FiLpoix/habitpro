@@ -1,6 +1,7 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function UpdateHabitScreen({ route, navigation }) {
@@ -25,7 +26,7 @@ export default function UpdateHabitScreen({ route, navigation }) {
 
   const fetchHabitDetails = async (authToken) => {
     try {
-      const response = await axios.get(`http://192.168.0.167:8000/api/items/${id}/`, {
+      const response = await api.get(`/api/items/${id}/`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setHabit(response.data);
@@ -39,7 +40,7 @@ export default function UpdateHabitScreen({ route, navigation }) {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://192.168.0.167:8000/api/items/${id}/`, habit, {
+      await api.put(`/api/items/${id}/`, habit, {
         headers: { Authorization: `Bearer ${token}` },
       });
       Alert.alert('Sucesso', 'Hábito atualizado com sucesso.');

@@ -36,7 +36,7 @@ export default function ProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.options}>
-          <TouchableOpacity style={styles.optionButton} onPress={() => navigation.navigate('EditProfile')}>
+          <TouchableOpacity style={styles.optionButton} >
             <FontAwesome name="edit" size={20} color="#4285F4" />
             <Text style={styles.optionText}>Editar Perfil</Text>
           </TouchableOpacity>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import api from '../services/api';
 
 export default function AddHabitScreen({ navigation }) {
     const [title, setTitle] = useState('');
@@ -25,8 +26,8 @@ export default function AddHabitScreen({ navigation }) {
                 return;
             }
 
-            const response = await axios.post(
-                'http://192.168.0.167:8000/api/items/',
+            const response = await api.post(
+                '/api/items/',
                 {
                     name: title,
                     description

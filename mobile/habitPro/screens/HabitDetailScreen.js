@@ -26,7 +26,7 @@ export default function HabitDetailScreen({ route, navigation }) {
 
   const fetchHabitDetails = async (authToken) => {
     try {
-      const response = await axios.get(`http://10.19.14.105:8000/api/items/${habitId}/`, {
+      const response = await axios.get(`http://192.168.0.167:8000/api/items/${habitId}/`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setHabit(response.data);
@@ -40,7 +40,7 @@ export default function HabitDetailScreen({ route, navigation }) {
 
   const deleteHabit = async () => {
     try {
-      await axios.delete(`http://10.19.14.105:8000/api/items/${habitId}/`, {
+      await axios.delete(`http://192.168.0.167:8000/api/items/${habitId}/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       Alert.alert('Sucesso', 'Hábito deletado com sucesso.');
@@ -57,90 +57,110 @@ export default function HabitDetailScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      {habit ? (
-        <View style={styles.card}>
-          <Text style={styles.title}>{habit.name}</Text>
-          <Text style={styles.description}>{habit.description}</Text>
-          <View style={styles.actions}>
-            <TouchableOpacity onPress={() => navigation.navigate('Update', { id: habit.id })} style={styles.editButton}>
-              <FontAwesome name="edit" size={20} color="green" />
-              <Text style={styles.buttonText}>Editar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={deleteHabit} style={styles.deleteButton}>
-              <FontAwesome name="trash" size={20} color="red" />
-              <Text style={styles.buttonText}>Excluir</Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity onPress={()=>navigation.goBack()} >
-            <Text>Voltar</Text>
+    {habit ? (
+      <View style={styles.card}>
+        <Text style={styles.title}>{habit.name}</Text>
+        <Text style={styles.teste}>Descrição de Habito:</Text>
+        <Text style={styles.description}>{habit.description}</Text>
+        <View style={styles.actions}>
+          <TouchableOpacity onPress={() => navigation.navigate('Update', { id: habit.id })} style={styles.editButton}>
+            <FontAwesome name="edit" size={20} color="green" />
+            <Text style={styles.buttonText}>Editar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={deleteHabit} style={styles.deleteButton}>
+            <FontAwesome name="trash" size={20} color="red" />
+            <Text style={styles.buttonText}>Excluir</Text>
           </TouchableOpacity>
         </View>
-      ) : (
-        <Text style={styles.errorText}>Hábito não encontrado.</Text>
-      )}
-    </View>
-  );
+      </View>
+    ) : (
+      <Text style={styles.errorText}>Hábito não encontrado.</Text>
+    )}
+       <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home')}>
+               <Text style={styles.backButtonText}>Voltar para Home</Text>
+             </TouchableOpacity>
+  </View>
+);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    backgroundColor: '#111',
-  },
-  card:{
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    shadowColor: '#000',
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  description: {
-    fontSize: 16,
-    marginBottom: 20,
-    color: '#555',
-  },
-  actions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  },
-  editButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#ddd',
-    borderRadius: 5,
-    backgroundColor: '#333',
-  },
-  deleteButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#333',
-    borderRadius: 5,
-  },
-  buttonText: {
-    marginLeft: 5,
-    fontSize: 16,
-    color: '#fff',
-  },
-  loadingText: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 20,
-  },
-  errorText: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: 'red',
-    marginTop: 20,
-  },
+container: {
+  flex: 1,
+  padding: 20,
+  backgroundColor: 'white',
+  justifyContent: 'center',
+  backgroundColor: '#111',
+},
+card:{
+  backgroundColor: '#fff',
+  borderRadius: 10,
+  padding: 20,
+  shadowColor: '#000',
+},
+title: {
+  textAlign: 'center',
+  fontSize: 24,
+  fontWeight: 'bold',
+  marginBottom: 10,
+},
+description: {
+  fontSize: 16,
+  marginBottom: 20,
+  color: '#555',
+},
+actions: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  marginTop: 20,
+},
+editButton: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: 10,
+  backgroundColor: '#ddd',
+  borderRadius: 5,
+  backgroundColor: '#333',
+},
+deleteButton: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: 10,
+  backgroundColor: '#333',
+  borderRadius: 5,
+},
+buttonText: {
+  marginLeft: 5,
+  fontSize: 16,
+  color: '#fff',
+},
+loadingText: {
+  fontSize: 16,
+  textAlign: 'center',
+  marginTop: 20,
+},
+errorText: {
+  fontSize: 16,
+  textAlign: 'center',
+  color: 'red',
+  marginTop: 20,
+},
+backButton: {
+  backgroundColor: '#333',
+  padding: 10,
+  borderRadius: 8,
+  alignItems: 'center',
+  marginTop: 20,
+  width: '100%',
+},
+backButtonText: {
+  color: 'white',
+  fontSize: 16,
+},
+teste: {
+  fontSize: 18,
+  marginBottom: 20,
+  color: '#555',
+  textAlign: 'center',
+  fontWeight: 'bold',
+},
 });

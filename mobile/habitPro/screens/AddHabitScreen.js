@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
@@ -26,7 +26,7 @@ export default function AddHabitScreen({ navigation }) {
             }
 
             const response = await axios.post(
-                'http://10.19.14.105:8000/api/items/',
+                'http://192.168.0.167:8000/api/items/',
                 {
                     name: title,
                     description
@@ -51,69 +51,117 @@ export default function AddHabitScreen({ navigation }) {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Adicionar Novo Hábito</Text>
+        <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Adicionar Novo Hábito</Text>
+      </View>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Título do Hábito"
-                value={title}
-                onChangeText={setTitle}
-            />
-
-            <TextInput
-                style={styles.input}
-                placeholder="Descrição"
-                multiline
-                value={description}
-                onChangeText={setDescription}
-            />
-
-            <TouchableOpacity
-                style={[styles.button, loading && { backgroundColor: '#888' }]}
-                onPress={addHabit}
-                disabled={loading}
-            >
-                <Text style={styles.buttonText}>{loading ? "Adicionando..." : "Adicionar Hábito"}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.button, styles.homeButton]}
-                onPress={() => navigation.goBack()} ><Text style={styles.buttonText}> Voltar Para tela Principal </Text>
-                </TouchableOpacity>
+      <View style={styles.card}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Título do Hábito</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite o título do hábito"
+            value={title}
+            onChangeText={setTitle}
+          />
         </View>
-    );
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Descrição</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite a descrição do hábito"
+            multiline
+            value={description}
+            onChangeText={setDescription}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={[styles.button, loading && { backgroundColor: '#888' }]}
+          onPress={addHabit}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>{loading ? 'Adicionando...' : 'Adicionar Hábito'}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, styles.secondaryButton]}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.buttonText}>Voltar Para Tela Principal</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: '#f8f9fa',
-        justifyContent: 'center'
-    },
-    title: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center'
-    },
-    input: {
-        backgroundColor: '#fff',
-        padding: 15,
-        borderRadius: 8,
-        marginBottom: 15,
-        borderWidth: 1,
-        borderColor: '#ddd'
-    },
-    button: {
-        backgroundColor: '#333',
-        padding: 15,
-        borderRadius: 8,
-        alignItems: 'center'
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold'
-    },
+  container: {
+    flexGrow: 1,
+    padding: 20,
+    backgroundColor: '#f8f9fa',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    padding: 25,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
+    width: '100%',
+    maxWidth: 400,
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  label: {
+    marginBottom: 8,
+    fontSize: 16,
+    color: '#555',
+    fontWeight: '500',
+  },
+  input: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    backgroundColor: '#f9f9f9',
+  },
+  button: {
+    backgroundColor: '#333',
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    borderWidth: 2,
+  },
+  secondaryButton: {
+    backgroundColor: '#555',
+    marginTop: 15,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 });

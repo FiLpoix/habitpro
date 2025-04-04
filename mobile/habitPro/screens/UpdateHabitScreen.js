@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -25,7 +25,7 @@ export default function UpdateHabitScreen({ route, navigation }) {
 
   const fetchHabitDetails = async (authToken) => {
     try {
-      const response = await axios.get(`http://10.19.14.105:8000/api/items/${id}/`, {
+      const response = await axios.get(`http://192.168.0.167:8000/api/items/${id}/`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setHabit(response.data);
@@ -39,7 +39,7 @@ export default function UpdateHabitScreen({ route, navigation }) {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://10.19.14.105:8000/api/items/${id}/`, habit, {
+      await axios.put(`http://192.168.0.167:8000/api/items/${id}/`, habit, {
         headers: { Authorization: `Bearer ${token}` },
       });
       Alert.alert('Sucesso', 'Hábito atualizado com sucesso.');
@@ -55,85 +55,124 @@ export default function UpdateHabitScreen({ route, navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-    <Text style={styles.headerTitle}>Editar Hábito</Text>
-    <View style={styles.card}>
-      <Text style={styles.label}>Nome do Hábito:</Text>
-      <TextInput
-        style={styles.input}
-        value={habit.name}
-        onChangeText={(text) => setHabit({ ...habit, name: text })}
-      />
-      <Text style={styles.label}>Descrição:</Text>
-      <TextInput
-        style={styles.input}
-        value={habit.description}
-        onChangeText={(text) => setHabit({ ...habit, description: text })}
-        multiline
-      />
-      <TouchableOpacity style={styles.saveButton} onPress={handleUpdate}>
-        <Text style={styles.buttonText}>Salvar Alterações</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.saveButton} onPress={()=> navigation.navigate('Home')} >
-        <Text>Voltar Para Tela Principal</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-);
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Editar Hábito</Text>
+      </View>
+      <View style={styles.card}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Nome do Hábito:</Text>
+          <TextInput
+            style={styles.input}
+            value={habit.name}
+            onChangeText={(text) => {
+              if (text.length <= 200) setHabit({ ...habit, name: text });
+            }}
+            multiline
+            onContentSizeChange={(e) => {
+              const height = e.nativeEvent.contentSize.height;
+              setHabit((prev) => ({ ...prev, nameHeight: height }));
+            }}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Descrição:</Text>
+          <TextInput
+            style={styles.input}
+            value={habit.description}
+            onChangeText={(text) => {
+              if (text.length <= 200) setHabit({ ...habit, description: text });
+            }}
+            multiline
+            onContentSizeChange={(e) => {
+              const height = e.nativeEvent.contentSize.height;
+              setHabit((prev) => ({ ...prev, descriptionHeight: height }));
+            }}
+          />
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handleUpdate}>
+          <Text style={styles.buttonText}>Salvar Alterações</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.secondaryButton]} onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.buttonText}>Voltar Para Tela Principal</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-container: {
-  flex: 1,
-  paddingTop: 50,
-  backgroundColor: '#111',
-  alignItems: 'center',
-},
-headerTitle: {
-  color: 'white',
-  fontSize: 22,
-  fontWeight: 'bold',
-  marginBottom: 20,
-},
-card: {
-  backgroundColor: '#333',
-  padding: 20,
-  borderRadius: 10,
-  width: '90%',
-  alignItems: 'center',
-},
-label: {
-  fontSize: 16,
-  fontWeight: 'bold',
-  color: 'white',
-  marginBottom: 5,
-},
-input: {
-  borderWidth: 1,
-  borderColor: '#ccc',
-  borderRadius: 5,
-  padding: 10,
-  marginBottom: 15,
-  fontSize: 16,
-  backgroundColor: 'white',
-  width: '100%',
-},
-saveButton: {
-  backgroundColor: '#fff',
-  padding: 10,
-  borderRadius: 5,
-  alignItems: 'center',
-  width: '100%',
-},
-buttonText: {
-  color: 'black',
-  fontSize: 16,
-  fontWeight: 'bold',
-},
-loadingText: {
-  fontSize: 16,
-  textAlign: 'center',
-  marginTop: 20,
-  color: 'white',
-},
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#f8f9fa',
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    padding: 25,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
+    width: '100%',
+    maxWidth: 400,
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  label: {
+    marginBottom: 8,
+    fontSize: 16,
+    color: '#555',
+    fontWeight: '500',
+  },
+  input: {
+    minHeight: 50,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    backgroundColor: '#f9f9f9',
+    textAlignVertical: 'top',
+  },
+  button: {
+    backgroundColor: '#333',
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    borderWidth: 2,
+  },
+  secondaryButton: {
+    backgroundColor: '#333',
+    marginTop: 15,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  loadingText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#333',
+  },
 });

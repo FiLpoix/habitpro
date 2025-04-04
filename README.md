@@ -1,69 +1,115 @@
-**BRIEFING DA ATIVIDADE – DESENVOLVIMENTO MOBILE**  
+# HabitPrime
 
-### Curso: Técnico em Informática para Internet  
-### Unidade: Desenvolvimento Mobile  
-### Nome da Atividade: Implementação de Aplicativo Mobile para o HabitPro  
+## Descrição
+HabitPrime é um aplicativo desenvolvido em React Native que permite aos usuários criarem, monitorarem e gerenciarem hábitos para melhorar sua produtividade e qualidade de vida.
 
----  
+## Funcionalidades
+- **Cadastro e Login**: Os usuários podem se registrar e fazer login para acessar suas informações pessoais e hábitos cadastrados.
+- **Adicionando Hábitos**: Crie novos hábitos com nome e descrição.
+- **Edição de Hábitos**: Modifique informações sobre seus hábitos.
+- **Detalhes dos Hábitos**: Visualize informações completas sobre um hábito específico.
+- **Gerenciamento de Perfil**: Atualize suas informações pessoais.
+- **Tela de Conquistas**: Acompanhe seu progresso com base nos hábitos cumpridos.
 
-### **1. Objetivo da Atividade**  
-Nesta atividade, vocês serão responsáveis por desenvolver a interface mobile do projeto **HabitPro**, utilizando **React Native com Expo**. O backend do sistema já foi desenvolvido utilizando **Django Rest Framework (DRF)** e está disponível no repositório do GitHub:
+## Estrutura do Projeto
 
-🔗 **Repositório do Backend:** [https://github.com/wesscosta/habitpro](https://github.com/wesscosta/habitpro)
+O projeto é estruturado da seguinte forma:
 
-O objetivo principal é consumir a API REST fornecida pelo backend e criar uma aplicação mobile funcional, com telas para cadastro, login e gerenciamento de hábitos.
+```
+HabitPrime/
+|-- backend/
+|   |-- manage.py
+|   |-- requirements.txt
+|   |-- core/
+|   |   |-- settings.py
+|   |   |-- urls.py
+|   |-- habits/
+|   |   |-- models.py
+|   |   |-- views.py
+|   |   |-- auth_views.py
+|   |   |-- serializers.py
+|   |   |-- urls.py
+|-- mobile/
+|   |--habitpro/
+|   |   |-- src/
+|   |   |   |-- screens/
+|   |   |   |   |-- HomeScreen.js
+|   |   |   |   |-- LoginScreen.js
+|   |   |   |   |-- RegisterScreen.js
+|   |   |   |   |-- ProfileScreen.js
+|   |   |   |   |-- EditProfileScreen.js
+|   |   |   |   |-- AddHabitScreen.js
+|   |   |   |   |-- UpdateHabitScreen.js
+|   |   |   |   |-- HabitDetailScreen.js
+|   |   |   |   |-- AchievementsScreen.js
+|   |   |-- assets/
+|   |   |-- App.js
+|   |   |-- package.json
+|-- README.md
+```
 
----  
+## Instalação
 
-### **2. Requisitos Técnicos**  
-#### **2.1 Tecnologias e Ferramentas**  
-- **Linguagem**: JavaScript/TypeScript  
-- **Framework**: React Native (Expo)  
-- **Gerenciamento de Estado**: Context API ou Redux (opcional)  
-- **Requisições à API**: Fetch API ou Axios  
-- **Roteamento**: React Navigation  
-- **Armazenamento Local**: AsyncStorage (para autenticação)  
-- **Estilização**: Styled Components ou TailwindCSS  
+### Pré-requisitos
+- Node.js instalado
+- Expo CLI instalado globalmente
+- Python 3 instalado
+- Django e Django REST Framework
 
-#### **2.2 Funcionalidades Mínimas**  
-- Tela de **Login** e **Cadastro de Usuário** (autenticação via API).  
-- Tela de **Dashboard**, exibindo hábitos cadastrados.  
-- Funcionalidade para **criação, edição e exclusão** de hábitos.  
-- Integração com o backend para sincronização de dados.  
-- Implementação de **navegação entre telas**.  
+### Configurando o Backend
+1. Acesse a pasta `backend`:
+   ```sh
+   cd backend
+   ```
+2. Crie um ambiente virtual e ative-o:
+   ```sh
+   python -m venv venv
+   source venv/bin/activate  # No Windows, use venv\Scripts\activate
+   ```
+3. Instale as dependências:
+   ```sh
+   pip install -r requirements.txt
+   ```
+4. Rode as migrações e inicie o servidor:
+   ```sh
+   python manage.py migrate
+   python manage.py runserver
+   ```
 
-#### **2.3 Extras (Opcional, para quem quiser ir além!)**  
-- Implementar notificações push para lembretes de hábitos.  
-- Criar um sistema de estatísticas para monitoramento do progresso dos hábitos.  
-- Personalizar a UI/UX com animações e design responsivo.  
+### Configurando o Frontend
+1. Acesse a pasta `habitpro`:
+   ```sh
+   cd mobile
+   ```
+   cd habitpro
+   ```sh
+2. Instale as dependências:
+   ```sh
+   npm install
+   ```
+3. Inicie o aplicativo:
+   ```sh
+   expo start
+   ```
 
----  
+## Tecnologias Utilizadas
+- **Frontend**:
+  - React Native
+  - Expo
+  - Axios
+  - React Navigation
+  - AsyncStorage
 
-### **3. Etapas da Atividade**  
-1. **Configuração do Ambiente**: Criar um novo projeto Expo e instalar dependências necessárias.  
-2. **Conectar ao Backend**: Testar endpoints da API com o Postman ou Thunder Client antes da implementação.  
-3. **Desenvolver as Telas**: Criar os componentes da interface seguindo os requisitos.  
-4. **Implementar a Lógica de Negócio**: Criar chamadas à API para autenticação e gerenciamento de hábitos.  
-5. **Testes e Ajustes**: Garantir que todas as funcionalidades estejam funcionando corretamente.  
-6. **Entrega Final**: Subir o código para um repositório no GitHub e documentar as funcionalidades implementadas.  
+- **Backend**:
+  - Python
+  - Django
+  - Django REST Framework
+  - Simple JWT para autenticação
 
----  
+## Como Encontrar no GitHub
 
-### **4. Entrega e Avaliação**  
-- **Forma de entrega:** Link do repositório no GitHub + apresentação em pitch com demonstração do aplicativo  
-- **Critérios de avaliação:**  
-  - Funcionalidade e integração correta com o backend (40%)  
-  - Organização do código e boas práticas (20%)  
-  - UI/UX e usabilidade (20%)  
-  - Documentação do projeto (README explicativo) (10%)  
-  - Implementação de funcionalidades extras (10%)  
+Este projeto está disponível publicamente no GitHub. Você pode acessá-lo pelo seguinte link:
 
-As equipes serão **ranqueadas e premiadas** conforme a qualidade dos seus projetos.
+👉 https://github.com/seu-usuario/habitprime
 
----  
-
-### **5. Dúvidas e Suporte**  
-Caso tenham dúvidas sobre o backend ou a implementação do aplicativo, vocês podem abrir **issues** no repositório ou enviar perguntas no grupo da turma.  
-
-🚀 **Bons códigos e boa prática!** 💡
-
+Não esqueça de deixar uma estrela ⭐ se gostar do projeto!

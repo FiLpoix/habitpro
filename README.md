@@ -31,7 +31,6 @@ HabitPrime/
 |   |   |-- urls.py
 |-- mobile/
 |   |--habitpro/
-|   |   |-- src/
 |   |   |   |-- screens/
 |   |   |   |   |-- HomeScreen.js
 |   |   |   |   |-- LoginScreen.js
@@ -42,9 +41,11 @@ HabitPrime/
 |   |   |   |   |-- UpdateHabitScreen.js
 |   |   |   |   |-- HabitDetailScreen.js
 |   |   |   |   |-- AchievementsScreen.js
-|   |   |-- assets/
-|   |   |-- App.js
-|   |   |-- package.json
+|   |   |   |-- services/
+|   |   |   |   |--api.js
+|   |   |   |-- assets/
+|   |   |   |-- App.js
+|   |   |   |-- package.json
 |-- README.md
 ```
 
